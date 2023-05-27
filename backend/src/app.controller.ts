@@ -25,7 +25,9 @@ export class AppController {
 
   @Get('post')
   async getPosts(): Promise<PostModel[]> {
-    return this.postService.posts({});
+    return this.postService.posts({
+      where: {},
+    });
   }
 
   @Get('feed')
