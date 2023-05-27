@@ -2,23 +2,23 @@
 import React from 'react'
 
 const Home: React.FC = () => {
-  const [posts, setPosts] = React.useState([])
+  const [post, setPost] = React.useState(null)
 
   React.useEffect(() => {
     fetch('http://localhost:3000/post/1', { method: 'GET' })
     .then(res => res.json())
     .then(data => {
-      setPosts(data)
+      setPost(data)
     })
   },[])
 
   return (
     <div>
-      {posts.map(post => {
-        <div>
+      {post && (
+        <>
           {post.title} {post.content}
-        </div>
-      })}
+        </>
+      )}
     </div>
   )
 }
