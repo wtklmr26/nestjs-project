@@ -8,7 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { PostService } from './post.service';
+import { PostService } from './volume.service';
 import { User as UserModel, Post as PostModel } from '@prisma/client';
 
 @Controller()
