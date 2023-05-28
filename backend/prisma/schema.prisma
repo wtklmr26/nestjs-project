@@ -22,6 +22,7 @@ model Volume {
   id Int @default(autoincrement()) @id
   manga Manga @relation(fields: [mangaId], references: [id])
   mangaId Int @map(name: "manga_id")
+  volume Int
 
   @@map("volumes")
 }
