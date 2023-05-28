@@ -14,10 +14,14 @@ model Manga {
   id Int @default(autoincrement()) @id
   title String @unique
   volumes Volume[]
+
+  @@map("mangas")
 }
 
 model Volume {
   id Int @default(autoincrement()) @id
-  manga Manga? @relation(fields: [mangaId], references: [id])
-  mangaId Int?
+  manga Manga @relation(fields: [mangaId], references: [id])
+  mangaId Int @map(name: "manga_id")
+
+  @@map("volumes")
 }
