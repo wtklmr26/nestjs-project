@@ -7,85 +7,53 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { UserService } from './user.service';
-import { PostService } from './volume.service';
-import { User as UserModel, Post as PostModel } from '@prisma/client';
+import { MangaService } from './manga.service';
+import { VolumeService } from './volume.service';
+import { Manga as MangaModel, Volume as VolumeModel } from '@prisma/client';
 
 @Controller()
 export class AppController {
   constructor(
-    private readonly userService: UserService,
-    private readonly postService: PostService,
+    private readonly mangaService: MangaService,
+    private readonly volumeService: VolumeService,
   ) {}
 
-  @Get('post/:id')
-  async getPostById(@Param('id') id: string): Promise<PostModel> {
-    return this.postService.post({ id: Number(id) });
-  }
-
-  @Get('post')
-  async getPosts(): Promise<PostModel[]> {
-    return this.postService.posts({
+  @Get('mangas')
+  async getMangas(): Promise<MangaModel[]> {
+    return this.mangaService.mangas({
       where: {},
     });
   }
 
-  @Get('feed')
-  async getPublishedPosts(): Promise<PostModel[]> {
-    return this.postService.posts({
-      where: { published: true },
-    });
-  }
-
-  @Get('filtered-posts/:searchString')
-  async getFilteredPosts(
-    @Param('searchString') searchString: string,
-  ): Promise<PostModel[]> {
-    return this.postService.posts({
-      where: {
-        OR: [
-          {
-            title: { contains: searchString },
-          },
-          {
-            content: { contains: searchString },
-          },
-        ],
-      },
-    });
-  }
-
-  @Post('post')
-  async createDraft(
-    @Body() postData: { title: string; content?: string; authorEmail: string },
-  ): Promise<PostModel> {
-    const { title, content, authorEmail } = postData;
-    return this.postService.createPost({
+  @Post('mangas')
+  async createManga(@Body() postData: { title: string }): Promise<MangaModel> {
+    const { title } = postData;
+    return this.mangaService.createManga({
       title,
-      content,
-      author: {
-        connect: { email: authorEmail },
-      },
     });
   }
 
-  @Post('user')
-  async signupUser(
-    @Body() userData: { name?: string; email: string },
-  ): Promise<UserModel> {
-    return this.userService.createUser(userData);
-  }
-
-  @Put('publish/:id')
-  async publishPost(@Param('id') id: string): Promise<PostModel> {
-    return this.postService.updatePost({
+  @Put('mangas/:id')
+  async updateManga(
+    @Param('id') id: string,
+    @Body() putData: { title: string },
+  ): Promise<MangaModel> {
+    const { title } = putData;
+    return this.mangaService.updateManga({
       where: { id: Number(id) },
-      data: { published: true },
+      data: { title },
     });
   }
 
-  @Delete('post/:id')
-  async deletePost(@Param('id') id: string): Promise<PostModel> {
-    return this.postService.deletePost({ id: Number(id) });
+  @Delete('mangas/:id')
+  async deleteManga(@Param('id') id: string): Promise<MangaModel> {
+    return this.mangaService.deleteManga({ id: Number(id) });
+  }
+
+  @Get('mangas/:id/volumes')
+  async getVlumes(@Param('id') id: string): Promise<VolumeModel[]> {
+    return this.volumeService.volumes({
+      where: { mangaId: Number(id) },
+    });
   }
 }

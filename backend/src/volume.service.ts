@@ -3,18 +3,18 @@ import { PrismaService } from './prisma.service';
 import { Volume, Prisma } from '@prisma/client';
 
 @Injectable()
-export class PostService {
+export class VolumeService {
   constructor(private prisma: PrismaService) {}
 
-  async post(
-    postWhereUniqueInput: Prisma.VolumeWhereUniqueInput,
+  async volume(
+    volumeWhereUniqueInput: Prisma.VolumeWhereUniqueInput,
   ): Promise<Volume | null> {
     return this.prisma.volume.findUnique({
-      where: postWhereUniqueInput,
+      where: volumeWhereUniqueInput,
     });
   }
 
-  async posts(params: {
+  async volumes(params: {
     skip?: number;
     take?: number;
     cursor?: Prisma.VolumeWhereUniqueInput;
@@ -31,13 +31,13 @@ export class PostService {
     });
   }
 
-  async createPost(data: Prisma.VolumeCreateInput): Promise<Volume> {
+  async createVolume(data: Prisma.VolumeCreateInput): Promise<Volume> {
     return this.prisma.volume.create({
       data,
     });
   }
 
-  async updatePost(params: {
+  async updateVolume(params: {
     where: Prisma.VolumeWhereUniqueInput;
     data: Prisma.VolumeUpdateInput;
   }): Promise<Volume> {
@@ -48,7 +48,7 @@ export class PostService {
     });
   }
 
-  async deletePost(where: Prisma.VolumeWhereUniqueInput): Promise<Volume> {
+  async deleteVolume(where: Prisma.VolumeWhereUniqueInput): Promise<Volume> {
     return this.prisma.volume.delete({
       where,
     });

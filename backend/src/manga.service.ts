@@ -6,7 +6,7 @@ import { Manga, Prisma } from '@prisma/client';
 export class MangaService {
   constructor(private prisma: PrismaService) {}
 
-  async user(
+  async manga(
     mangaWhereUniqueInput: Prisma.MangaWhereUniqueInput,
   ): Promise<Manga | null> {
     return this.prisma.manga.findUnique({
@@ -31,13 +31,13 @@ export class MangaService {
     });
   }
 
-  async createUser(data: Prisma.MangaCreateInput): Promise<Manga> {
+  async createManga(data: Prisma.MangaCreateInput): Promise<Manga> {
     return this.prisma.manga.create({
       data,
     });
   }
 
-  async updateUser(params: {
+  async updateManga(params: {
     where: Prisma.MangaWhereUniqueInput;
     data: Prisma.MangaUpdateInput;
   }): Promise<Manga> {
@@ -48,7 +48,7 @@ export class MangaService {
     });
   }
 
-  async deleteUser(where: Prisma.MangaWhereUniqueInput): Promise<Manga> {
+  async deleteManga(where: Prisma.MangaWhereUniqueInput): Promise<Manga> {
     return this.prisma.manga.delete({
       where,
     });
