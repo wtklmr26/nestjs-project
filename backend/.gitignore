@@ -36,3 +36,4 @@ lerna-debug.log*
 
 # Database
 mysql/data
+mysql_slave/data
